@@ -1,10 +1,4 @@
-// import Link from 'next/link'
-import styled from '@emotion/styled'
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 860px;
-`
+import Container from 'components/layout/Container'
 
 const Header = () => {
   return (

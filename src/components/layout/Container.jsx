@@ -5,6 +5,7 @@ const Container = styled.div`
   // TODO : padding
   margin: 0 auto;
   max-width: 860px;
+  padding: 20px;
 `
 
 export default Container

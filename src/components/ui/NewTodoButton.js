@@ -4,18 +4,21 @@ import NewButtonImg from 'assets/buttons/new_white.png'
 
 const Button = styled.button`
   border: 0;
+  border-radius: 25px;
   padding: 10px;
-  background: transparent;
+  background: #F15F5F;
   width: 50px;
   height: 50px;
-  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   img {
     width: 100%;
     height: 100%;
   }
 `
 
-const NewButton = (props) => {
+const NewTodoButton = (props) => {
   const { onClick, param } = props;
 
   return (
@@ -25,4 +28,4 @@ const NewButton = (props) => {
   )
 }
 
-export default NewButton
+export default NewTodoButton

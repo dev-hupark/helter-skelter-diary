@@ -1,19 +1,17 @@
 import styled from '@emotion/styled'
 import Header from 'components/layout/Header'
 import Footer from 'components/layout/Footer'
+import Container from 'components/layout/Container'
 
 const Wrapper = styled.div`
-`
-
-const Main = styled.div`
 `
 
 const Layout = ({ children }) => (
   <Wrapper>
     <Header />
-    <Main>
+    <Container>
       {children}
-    </Main>
+    </Container>
     <Footer />
   </Wrapper>
 )
