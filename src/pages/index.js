@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import { useTodos } from 'data/todos'
 import TodoList from 'components/todo/List'
 import NewTodoButton from 'components/ui/NewTodoButton'
-import NewTodoPopup from 'components/todo/NewPopup'
+import NewTodoPopup from 'components/todo/FormPopup'
+import ToastPopup from 'components/ui/ToastPopup'
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,13 +21,20 @@ const Index = () => {
     created_user: 'system',
   })
 
-  const toggleIsPopup = () => {
+  const [ isOpen, setIsOpen ] = useState(false)
+  const [ message, setMessage ] = useState('')
+
+  const toggleIsPopup = ( isToast, msg ) => {
     if(isPopup){
       setCurrentTodo({
         todo: '',
         memo: '',
         created_user: 'system',
       })
+    }
+    if(isToast){
+      setIsOpen(isToast)
+      setMessage(msg)
     }
 
     setIsPopup(!isPopup)
@@ -50,6 +58,7 @@ const Index = () => {
           currentTodo={currentTodo}
         />
       }
+      <ToastPopup open={isOpen} setOpen={setIsOpen} message={message}/>
     </Wrapper>
   )
 }

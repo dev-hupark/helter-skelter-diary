@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { insertTodo, updateTodo } from 'data/todos'
 import Close from 'assets/buttons/close.png'
 import ImageButton from 'components/ui/ImageButton'
 import TextButton from 'components/ui/TextButton'
-import PropTypes from 'prop-types'
 
 const Wrapper = styled.div`
   position: fixed;
@@ -53,7 +53,7 @@ const InputButtonForm = styled.div`
   justify-content: center;
 `
 
-const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
+const FormPopup = ({ closePopup, refreshTodos, currentTodo }) => {
   const [ todo, setTodo ] = useState(currentTodo)
 
   const updateTodoObj = (name, value) => {
@@ -65,7 +65,7 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
     switch (status){
       case 201:
         refreshTodos()
-        closePopup()
+        closePopup(true, '일정 등록이 완료 되었습니다.')
         break
     }
   }
@@ -75,7 +75,7 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
     switch (status){
       case 204:
         refreshTodos()
-        closePopup()
+        closePopup(true, '일정 수정이 완료 되었습니다.')
         break
     }
   }
@@ -100,17 +100,16 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
             <TextButton onClick={() => editTodo(todo)}>수정</TextButton>
             : <TextButton onClick={() => saveTodo(todo)}>등록</TextButton>
           }
-
         </InputButtonForm>
       </Popup>
     </Wrapper>
   )
 }
 
-NewPopup.propTypes = {
+FormPopup.propTypes = {
   closePopup: PropTypes.func,
   refreshTodos: PropTypes.func,
   currentTodo: PropTypes.object,
 }
 
-export default NewPopup
+export default FormPopup
