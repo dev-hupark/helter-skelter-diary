@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import NewButtonImg from 'assets/buttons/new_white.png'
+import PropTypes from 'prop-types'
 
 const Button = styled.button`
   border: 0;
@@ -19,13 +20,18 @@ const Button = styled.button`
 `
 
 const NewTodoButton = (props) => {
-  const { onClick, param } = props;
+  const { onClick, param } = props
 
   return (
     <Button onClick={() => onClick(param)}>
       <Image src={NewButtonImg} alt="new button"/>
     </Button>
   )
+}
+
+NewTodoButton.propTypes = {
+  onClick: PropTypes.func,
+  param: PropTypes.object,
 }
 
 export default NewTodoButton

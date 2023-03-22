@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
 
 const Button = styled.button`
   border-radius: 5px;
@@ -24,39 +25,36 @@ const Cancel = styled(Button)`
   color: #FF3131;
 `
 
-const ActiveButton = (props) => {
-  const { onClick, param } = props;
+const TextButton = (props) => {
+  const { onClick, param, kind } = props
 
-  return (
-    <Active onClick={onClick ? () => onClick(param) : undefined}>
-      {props.children}
-    </Active>
-  )
+  switch (kind) {
+    case 'inActive':
+      return (
+        <InActive onClick={onClick ? () => onClick(param) : undefined}>
+          {props.children}
+        </InActive>
+      )
+    case 'cancel':
+      return (
+        <Cancel onClick={onClick ? () => onClick(param) : undefined}>
+          {props.children}
+        </Cancel>
+      )
+    default:
+      return(
+        <Active onClick={onClick ? () => onClick(param) : undefined}>
+          {props.children}
+        </Active>
+      )
+  }
 }
 
-const InActiveButton = (props) => {
-  const { onClick, param } = props;
-
-  return (
-    <InActive onClick={onClick ? () => onClick(param) : undefined}>
-      {props.children}
-    </InActive>
-  )
+TextButton.propTypes = {
+  onClick: PropTypes.func,
+  param: PropTypes.object,
+  kind: PropTypes.string,
+  children: PropTypes.node,
 }
 
-const CanCelButton = (props) => {
-  const { onClick, param } = props;
-
-  return (
-    <Cancel onClick={onClick ? () => onClick(param) : undefined}>
-      {props.children}
-    </Cancel>
-  )
-}
-
-
-export {
-  ActiveButton,
-  InActiveButton,
-  CanCelButton,
-}
+export default TextButton

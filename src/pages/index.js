@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useTodos } from 'data/todos'
 import TodoList from 'components/todo/List'
@@ -17,7 +17,7 @@ const Index = () => {
   const [ currentTodo, setCurrentTodo ] = useState({
     todo: '',
     memo: '',
-    created_user: 'hupark',
+    created_user: 'system',
   })
 
   const toggleIsPopup = () => {
@@ -25,7 +25,7 @@ const Index = () => {
       setCurrentTodo({
         todo: '',
         memo: '',
-        created_user: 'hupark',
+        created_user: 'system',
       })
     }
 
@@ -40,18 +40,18 @@ const Index = () => {
   return (
     <Wrapper>
       <TodoList todos={todos}
-                refreshTodos={refreshTodos}
-                openEditPopup={openEditPopup}
+        refreshTodos={refreshTodos}
+        openEditPopup={openEditPopup}
       />
       <NewTodoButton onClick={toggleIsPopup} />
       { isPopup &&
         <NewTodoPopup closePopup={toggleIsPopup}
-                      refreshTodos={refreshTodos}
-                      currentTodo={currentTodo}
+          refreshTodos={refreshTodos}
+          currentTodo={currentTodo}
         />
       }
     </Wrapper>
   )
 }
 
-export default Index;
+export default Index

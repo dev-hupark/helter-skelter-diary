@@ -1,5 +1,5 @@
-import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import React from 'react'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 export default class CustomDocument extends Document {
   render() {
@@ -7,10 +7,10 @@ export default class CustomDocument extends Document {
       <Html lang="ko">
         <Head />
         <body>
-        <Main />
-        <NextScript />
+          <Main />
+          <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }

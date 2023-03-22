@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { format } from 'utils/date'
 import { updateTodoStatus, deleteTodo } from 'data/todos'
@@ -9,14 +10,13 @@ import EditBtn from 'assets/buttons/edit.png'
 import DeleteBtn from 'assets/buttons/delete.png'
 
 const TodoCard = styled.ul`
-  ${(props) => props.status === 0 ?
+  ${(props) => props.status === 'undone' ?
     `
       border: 1px solid #6799FF
     `
-      : `
+    : `
         border: 1px solid #999999;
-      `
-  };
+      `};
   width: 100%;
   background-color: #fff; 
   border-radius: 10px;
@@ -38,15 +38,11 @@ const TodoCard = styled.ul`
 
 const TodoRow = styled.li`
   height: 25px;
-  ${(props) => props.status === 1 ? 'text-decoration: line-through' : ''};
+  ${(props) => props.status === 'done' ? 'text-decoration: line-through' : ''};
 `
 
 const TodoButtonRow = styled.li`
   height: 30px;
-`
-const TodoWriter = styled.li`
-  height: 20px;
-  line-height: 20px;
 `
 
 const Todo = styled.p`
@@ -66,15 +62,15 @@ const Description = styled.p`
 `
 
 const List = ({ todos, refreshTodos, openEditPopup }) => {
-
   const completeTodo = async (todo) => {
-    let state = todo.status === 0 ? 1 : 0
-    const status = await updateTodoStatus(todo.id, state)
+    let state = todo.status === 'undone' ? 'done' : 'undone'
+
+    const status = await updateTodoStatus(todo, state)
 
     switch (status){
       case 204:
         refreshTodos()
-        break;
+        break
     }
   }
 
@@ -84,11 +80,10 @@ const List = ({ todos, refreshTodos, openEditPopup }) => {
 
   const removeTodo = async (todo) => {
     const status = await deleteTodo(todo)
-    console.log(status)
     switch (status){
       case 204:
         refreshTodos()
-        break;
+        break
     }
   }
 
@@ -96,9 +91,6 @@ const List = ({ todos, refreshTodos, openEditPopup }) => {
     <>
       {todos?.map((todo) => (
         <TodoCard key={todo.id} status={todo.status}>
-          {/*<TodoWriter>
-            <Description>{obj.created_user}</Description>
-          </TodoWriter>*/}
           <TodoRow status={todo.status}>
             <Todo>{todo.todo}</Todo>
           </TodoRow>
@@ -110,24 +102,30 @@ const List = ({ todos, refreshTodos, openEditPopup }) => {
               <Description>{format('YYYY-MM-DD HH:mm:ss', todo.completion_dt)}</Description>
             }
             <div>
-              <ImageButton src={todo.status === 0 ? ChkBlue : ChkGray}
-                           onClick={completeTodo} param={todo}
+              <ImageButton src={todo.status === 'undone' ? ChkBlue : ChkGray}
+                onClick={completeTodo} param={todo}
               />
-              {todo.status === 0 &&
+              {todo.status === 'undone' &&
                 <ImageButton src={EditBtn}
-                             onClick={editTodo}
-                             param={todo}
+                  onClick={editTodo}
+                  param={todo}
                 />
               }
               <ImageButton src={DeleteBtn}
-                           onClick={removeTodo}
-                           param={todo} />
+                onClick={removeTodo}
+                param={todo} />
             </div>
           </TodoButtonRow>
         </TodoCard>
       ))}
     </>
   )
+}
+
+List.propTypes = {
+  todos: PropTypes.array.isRequired,
+  refreshTodos: PropTypes.func,
+  openEditPopup: PropTypes.func,
 }
 
 export default List

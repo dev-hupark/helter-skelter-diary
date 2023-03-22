@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import { insertTodo, updateTodo } from 'data/todos'
 import Close from 'assets/buttons/close.png'
 import ImageButton from 'components/ui/ImageButton'
-import { ActiveButton } from 'components/ui/TextButton'
+import TextButton from 'components/ui/TextButton'
+import PropTypes from 'prop-types'
 
 const Wrapper = styled.div`
   position: fixed;
@@ -56,7 +57,7 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
   const [ todo, setTodo ] = useState(currentTodo)
 
   const updateTodoObj = (name, value) => {
-    setTodo(prevState => ({ ...prevState, [name]: value }));
+    setTodo(prevState => ({ ...prevState, [name]: value }))
   }
 
   const saveTodo = async (todo) => {
@@ -65,7 +66,7 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
       case 201:
         refreshTodos()
         closePopup()
-        break;
+        break
     }
   }
 
@@ -75,7 +76,7 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
       case 204:
         refreshTodos()
         closePopup()
-        break;
+        break
     }
   }
 
@@ -88,22 +89,28 @@ const NewPopup = ({ closePopup, refreshTodos, currentTodo }) => {
         </PopupTitle>
         <InputForm>
           <InputTodo placeholder="일정 제목"
-                     value={todo.todo}
-                     onChange={e => updateTodoObj('todo', e.target.value)} />
+            value={todo.todo}
+            onChange={e => updateTodoObj('todo', e.target.value)} />
           <InputTodo placeholder="설명 추가"
-                     value={todo.memo}
-                     onChange={e => updateTodoObj('memo', e.target.value)} />
+            value={todo.memo}
+            onChange={e => updateTodoObj('memo', e.target.value)} />
         </InputForm>
         <InputButtonForm>
           {todo.id !== undefined ?
-            <ActiveButton onClick={() => editTodo(todo)}>수정</ActiveButton>
-            : <ActiveButton onClick={() => saveTodo(todo)}>등록</ActiveButton>
+            <TextButton onClick={() => editTodo(todo)}>수정</TextButton>
+            : <TextButton onClick={() => saveTodo(todo)}>등록</TextButton>
           }
 
         </InputButtonForm>
       </Popup>
     </Wrapper>
   )
+}
+
+NewPopup.propTypes = {
+  closePopup: PropTypes.func,
+  refreshTodos: PropTypes.func,
+  currentTodo: PropTypes.object,
 }
 
 export default NewPopup

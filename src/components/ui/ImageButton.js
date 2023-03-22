@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
 const Button = styled.button`
   border: 0;
@@ -15,13 +16,19 @@ const Button = styled.button`
 `
 
 const ImageButton = (props) => {
-  const { onClick, param } = props;
+  const { onClick, param, src } = props
 
   return (
-  <Button onClick={onClick ? () => onClick(param) : undefined}>
-    <Image src={props.src} alt="button"/>
-  </Button>
+    <Button onClick={onClick ? () => onClick(param) : undefined}>
+      <Image src={src} alt="button"/>
+    </Button>
   )
+}
+
+ImageButton.propTypes = {
+  onClick: PropTypes.func,
+  param: PropTypes.object,
+  src: PropTypes.object,
 }
 
 export default ImageButton

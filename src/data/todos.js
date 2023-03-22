@@ -5,14 +5,14 @@ const useTodos = () => {
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
-    refresh()
+    void refresh()
   }, [])
 
   const refresh = useCallback(async () => {
-    const { data: todos, error, status } = await client
+    const { data: todos, status } = await client // error
       .from('todos')
       .select('*')
-      .order('status', { ascending: true })
+      .order('status', { ascending: false })
       .order('created_dt', { ascending: false })
 
     switch (status) {
@@ -29,23 +29,17 @@ const useTodos = () => {
   }
 }
 
-const updateTodoStatus = async (id, todoStatus) => {
-  let completionDt = null;
-
-  if(todoStatus === 1){
-    completionDt = 'now()'
-  }
-
-  const { error, status } = await client
+const updateTodoStatus = async (todo, todoStatus) => {
+  const { status } = await client // error
     .from('todos')
-    .update({ status: todoStatus, completion_dt: completionDt })
-    .eq('id', id)
+    .update({ status: todoStatus, completion_dt: todoStatus === 'done' ? 'now()' : null })
+    .eq('id', todo.id)
 
   return status
 }
 
 const insertTodo = async (todo) => {
-  const { error, status } = await client
+  const { status } = await client // error
     .from('todos')
     .insert(todo)
 
@@ -53,7 +47,7 @@ const insertTodo = async (todo) => {
 }
 
 const updateTodo = async (todo) => {
-  const { error, status } = await client
+  const { status } = await client // error
     .from('todos')
     .update(todo)
     .eq('id', todo.id)
@@ -62,7 +56,7 @@ const updateTodo = async (todo) => {
 }
 
 const deleteTodo = async (todo) => {
-  const { error, status } = await client
+  const { status } = await client // error
     .from('todos')
     .delete()
     .eq('id', todo.id)
