@@ -83,7 +83,7 @@ const Viewport = styled(Toast.Viewport)`
   outline: none;
 `
 const ToastPopup = ({open, setOpen, message}) => (
-  <Provider swipeDirection="right" duration={1000}>
+  <Provider swipeDirection="right" duration={1500}>
     <Root className="ToastRoot" open={open} onOpenChange={setOpen}>
       <Title className="ToastTitle"> {message}</Title>
     </Root>
