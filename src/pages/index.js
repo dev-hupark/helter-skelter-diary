@@ -5,6 +5,7 @@ import TodoList from 'components/todo/List'
 import NewTodoButton from 'components/ui/NewTodoButton'
 import NewTodoPopup from 'components/todo/FormPopup'
 import ToastPopup from 'components/ui/ToastPopup'
+import { signInWithGoogle, signOut } from '/lib/auth/google'
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,6 +60,9 @@ const Index = () => {
         />
       }
       <ToastPopup open={isOpen} setOpen={setIsOpen} message={message}/>
+
+      <button onClick={signInWithGoogle}>구글 로그인</button>
+      <button onClick={signOut}>로그아웃</button>
     </Wrapper>
   )
 }
