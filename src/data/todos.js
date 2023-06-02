@@ -1,26 +1,32 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useAuth } from 'auth/use-auth'
 import { client } from '/lib/supabaseClient'
 
-const useTodos = () => {
+
+const useTodos = ( userId ) => {
   const [todos, setTodos] = useState([])
+  const { loggedIn } = useAuth()
 
   useEffect(() => {
     void refresh()
-  }, [])
+  }, [userId])
 
   const refresh = useCallback(async () => {
-    const { data: todos, status } = await client // error
-      .from('todos')
-      .select('*')
-      .order('status', { ascending: false })
-      .order('created_dt', { ascending: false })
+    if( loggedIn ){
+      const { data: todos, status } = await client // error
+        .from('todos')
+        .select('*')
+        .eq('created_user', userId)
+        .order('status', { ascending: false })
+        .order('created_dt', { ascending: false })
 
-    switch (status) {
-      case 200:
-        setTodos(todos)
-        break
+      switch (status) {
+        case 200:
+          setTodos(todos)
+          break
+      }
     }
-  }, [])
+  }, [userId])
 
   return {
     todos,

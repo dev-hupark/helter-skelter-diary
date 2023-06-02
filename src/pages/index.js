@@ -10,8 +10,8 @@ const Wrapper = styled.div`
 const Index = () => {
   return (
     <Wrapper>
-      <h1>Main 화면 pr test</h1>
-      <Link href="/todo">할 일 목록 보러 가기</Link>
+      <Link href="/todo">할일</Link>
+      <Link href="/schedule">일정</Link>
     </Wrapper>
   )
 }

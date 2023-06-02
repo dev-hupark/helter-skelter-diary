@@ -1,7 +1,7 @@
 import Container from 'components/layout/Container'
-import { signOut, useSession } from '/lib/auth/login'
 import styled from '@emotion/styled'
 import Link from 'next/link'
+import { useAuth } from 'auth/use-auth'
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,13 +11,13 @@ const Wrapper = styled.div`
   }
 `
 const Header = () => {
-  const session = useSession()
+  const { user, signOut } = useAuth()
 
   return (
     <Container>
       <Wrapper>
-        <h1>Header</h1>
-        {session === null ?
+        <h1>얼레벌레</h1>
+        {Object.keys(user).length === 0?
           <button>
             <Link href="/signin">
               로그인
