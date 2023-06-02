@@ -61,7 +61,7 @@ const Description = styled.p`
   
 `
 
-const List = ({ todos, refreshTodos, openEditPopup }) => {
+const List = ({ todos, refreshTodos, openEditPopup, user }) => {
   const completeTodo = async (todo) => {
     let state = todo.status === 'undone' ? 'done' : 'undone'
 
@@ -69,7 +69,7 @@ const List = ({ todos, refreshTodos, openEditPopup }) => {
 
     switch (status){
       case 204:
-        refreshTodos()
+        refreshTodos(user.id)
         break
     }
   }

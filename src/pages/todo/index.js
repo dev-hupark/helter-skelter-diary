@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { useAuth } from 'auth/use-auth'
 import { useTodos } from 'data/todos'
-import TodoList from 'components/todo/List'
+import List from 'components/todo/List'
 import NewTodoButton from 'components/ui/NewTodoButton'
 import NewTodoPopup from 'components/todo/FormPopup'
 import ToastPopup from 'components/ui/ToastPopup'
@@ -13,12 +14,13 @@ const Wrapper = styled.div`
 `
 
 const Index = () => {
-  const { todos, refresh: refreshTodos } = useTodos()
+  const { user } = useAuth()
+  const { todos, refresh: refreshTodos } = useTodos(user.id)
   const [ isPopup, setIsPopup ] = useState(false)
   const [ currentTodo, setCurrentTodo ] = useState({
     todo: '',
     memo: '',
-    created_user: 'system',
+    created_user: user.id,
   })
 
   const [ isOpen, setIsOpen ] = useState(false)
@@ -29,7 +31,7 @@ const Index = () => {
       setCurrentTodo({
         todo: '',
         memo: '',
-        created_user: 'system',
+        created_user: user.id,
       })
     }
     if(isToast){
@@ -47,11 +49,14 @@ const Index = () => {
 
   return (
     <Wrapper>
-      <TodoList todos={todos}
+      <List todos={todos}
         refreshTodos={refreshTodos}
         openEditPopup={openEditPopup}
+        user={user}
       />
-      <NewTodoButton onClick={toggleIsPopup} />
+      <NewTodoButton onClick={toggleIsPopup}
+        user={user}
+      />
       { isPopup &&
         <NewTodoPopup closePopup={toggleIsPopup}
           refreshTodos={refreshTodos}
