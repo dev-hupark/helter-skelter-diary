@@ -2,7 +2,7 @@ import Container from 'components/layout/Container'
 
 const Footer = () => (
   <Container>
-    <h1>Footer</h1>
+    <p>copyrightⓒ 2023 All rights reserved by hu-Park</p>
   </Container>
 )
 
